@@ -444,7 +444,7 @@ function SanderUI:CreateWindow(userConfig)
 
     local player = game.Players.LocalPlayer
     local playerGui = player:WaitForChild("PlayerGui")
-    local screenGui = playerGui:WaitForChild("SanderUI")
+    PlayerGui:FindFirstChild("SanderUI")
 
     local mainFrame = screenGui:WaitForChild("MainFrame")
     local topBar = mainFrame:WaitForChild("TopBar")
