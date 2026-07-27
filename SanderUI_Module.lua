@@ -443,8 +443,24 @@ function SanderUI:CreateWindow(userConfig)
     local cfg = MergeTables(DEFAULT_CONFIG, userConfig or {})
 
     local player = game.Players.LocalPlayer
-    local playerGui = player:WaitForChild("PlayerGui")
-    PlayerGui:FindFirstChild("SanderUI")
+    
+    -- Executor (CoreGui) vs Studio (PlayerGui) tespiti
+    local screenGui = nil
+    local coreGui = game:GetService("CoreGui")
+    
+    if coreGui:FindFirstChild("SanderUI") then
+        screenGui = coreGui.SanderUI
+    else
+        local playerGui = player:WaitForChild("PlayerGui", 5)
+        if playerGui and playerGui:FindFirstChild("SanderUI") then
+            screenGui = playerGui.SanderUI
+        end
+    end
+
+    if not screenGui then
+        warn("SanderUI Error: Arayüz (ScreenGui) bulunamadı! Lütfen arayüzün CoreGui veya PlayerGui içinde yüklü olduğundan emin olun.")
+        return
+    end
 
     local mainFrame = screenGui:WaitForChild("MainFrame")
     local topBar = mainFrame:WaitForChild("TopBar")
